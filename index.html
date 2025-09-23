@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Informática Básica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0066cc;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .main {
+      flex: 1;
+      display: flex; /* divide a tela em duas colunas */
+    }
+
+    /* Menu lateral */
+    .tabs {
+      width: 200px;
+      background: #f4f4f9;
+      border-right: 2px solid #ccc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabs button {
+      padding: 14px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      text-align: left;
+      transition: background 0.3s;
+    }
+
+    .tabs button:hover {
+      background: #e0e0e0;
+    }
+
+    .tabs button.active {
+      background: #0066cc;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Área de conteúdo */
+    .tab-container {
+      flex: 1;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto; /* centraliza conteúdo */
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    footer {
+      background: #0066cc;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: auto;
+    }
+
+    /* Responsividade para celular */
+    @media (max-width: 768px) {
+      .main {
+        flex-direction: column; /* menu fica em cima */
+      }
+
+      .tabs {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ccc;
+        flex-direction: row; /* vira barra horizontal */
+        overflow-x: auto; /* rolagem se não couber */
+      }
+
+      .tabs button {
+        flex: 1;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .tab-container {
+        margin: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Curso de Informática Básica</h1>
+    <p>Aprenda os fundamentos de forma simples</p>
+  </header>
+
+  <div class="main">
+    <!-- Menu -->
+    <div class="tabs">
+      <button class="tab-link active" onclick="openTab(event, 'introducao')">Introdução</button>
+      <button class="tab-link" onclick="openTab(event, 'hardware')">Hardware</button>
+      <button class="tab-link" onclick="openTab(event, 'software')">Software</button>
+      <button class="tab-link" onclick="openTab(event, 'internet')">Internet</button>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="tab-container">
+      <div id="introducao" class="tab-content active">
+        <h2>Introdução</h2>
+        <p>Bem-vindo ao curso de Informática Básica! Aqui você aprenderá conceitos fundamentais de software e hardware, tudo para que você saiba como usar seu computador no dia a dia.</p>
+      </div>
+
+      <div id="hardware" class="tab-content">
+        <h2>Hardware</h2>
+        <p>O hardware contempla toda a parte física do computador ou dispositivo. Podemos fixar esta ideia na cabeça pensando nesta pequena frase: <b>Hardware é aquilo que chutamos quando o computador trava.</b></p>
+        <p>Alguns exemplos do que seria o hardware: monitor, teclado, mouse, placa-mãe, memória RAM, disco rígido. Se você olhar para o seu celular, toda a parte física que você toca é considerada hardware!</p>
+        <p><b>Classificação:</b></p>
+        <ul>
+          <li><b>Entrada</b> → teclado, mouse, microfone, câmera.</li>
+          <li><b>Saída</b> → monitor, caixas de som, impressora.</li>
+          <li><b>Entrada e Saída</b> → tela touchscreen, pendrive, HD externo.</li>
+        </ul>
+      </div>
+
+      <div id="software" class="tab-content">
+        <h2>Software</h2>
+        <p>O software é a parte lógica, ou seja, os programas que rodam no computador. Exemplos: Windows, Word, navegadores de internet e jogos.</p>
+      </div>
+
+      <div id="internet" class="tab-content">
+        <h2>Internet</h2>
+        <p>A internet conecta computadores do mundo todo. Com ela podemos enviar mensagens, estudar, trabalhar e acessar informações.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Curso de Informática Básica | Desenvolvido por Você</p>
+  </footer>
+
+  <script>
+    function openTab(evt, tabId) {
+      // Esconde todo o conteúdo
+      let contents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+
+      // Remove "ativo" dos botões
+      let tabs = document.getElementsByClassName("tab-link");
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+      }
+
+      // Mostra a aba selecionada
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+  </script>
+</body>
+</html>
