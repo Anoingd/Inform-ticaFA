@@ -88,6 +88,42 @@
       display: block;
     }
 
+    /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      max-width: 400px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .popup-content img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      margin-top: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
     /* Responsividade para celular */
     @media (max-width: 768px) {
       .main {
@@ -122,6 +158,13 @@
         max-width: 100%;
       }
     }
+
+    /* Estilo para os links do glossário */
+    .glossario-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -149,7 +192,7 @@
     <div class="tab-container">
       <div id="introducao" class="tab-content active">
         <h2>Introdução</h2>
-        <p>Bem-vindo ao curso de Informática Básica! Aqui você aprenderá conceitos fundamentais de software e hardware, tudo para que você saiba como usar seu computador no dia a dia.</p>
+        <p>Bem-vindo! tudo bem? este site foi criado no intuito de levar o conhecimento básico sobre software e hardware a qualquer um, meu objetivo é que após a leitura dos tópicos você saia daqui com o conhecimento necessario para ter uma boa interassão com um computador ou tecnologia em geral, então coloque uma musica relaxante, pegue uma agua e vamos juntos ver como funciona um computador, como usar seus aplicativos e como as maquinas funcionam por baixo dos panos!</p>
       </div>
 
       <div id="hardware" class="tab-content">
@@ -165,15 +208,10 @@
         <p><b>Componentes internos de um computador:</b></p>
         <ul>
           <li><b>Placa-mãe</b> → “a central que conecta todas as peças”.</li>
-
           <li><b>Processador (CPU)</b> → “o cérebro do computador, onde os cálculos acontecem”.</li>
-
-          <li><b>Memória RAM</b> → “memória temporária, usada enquanto o PC está ligado”.</li>
-
+          <li><b>Memória ram</b> → “memória temporária, usada enquanto o PC está ligado”.</li>
           <li><b>Disco rígido / SSD</b> → “onde ficam armazenados arquivos e programas”.</li>
-
           <li><b>Fonte de alimentação</b> → “leva energia para todas as peças”.</li>
-
           <li><b>Placa de vídeo (GPU)</b> → “responsável pelas imagens e jogos”.</li>
         </ul>
       </div>
@@ -181,6 +219,7 @@
       <div id="software" class="tab-content">
         <h2>Software</h2>
         <p>O software é a parte lógica, ou seja, os programas que rodam no computador. Exemplos: Windows, Word, navegadores de internet e jogos.</p>
+        <p>Alguns exemplos do que seria um software:  </p>
       </div>
 
       <div id="internet" class="tab-content">
@@ -195,25 +234,84 @@
     </div>
   </div>
 
+  <!-- Popup para o glossário -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2 id="popup-title"></h2>
+      <img id="popup-img" src="" alt="">
+      <p id="popup-desc"></p>
+      <button class="close-btn" onclick="fecharPopup()">Fechar</button>
+    </div>
+  </div>
+
   <script>
     function openTab(evt, tabId) {
-      // Esconde todo o conteúdo
       let contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
       }
-
-      // Remove "ativo" dos botões
       let tabs = document.getElementsByClassName("tab-link");
       for (let i = 0; i < tabs.length; i++) {
         tabs[i].classList.remove("active");
       }
-
-      // Mostra a aba selecionada
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
+    }
+
+    // Glossário automático
+    const glossario = {
+      "placa-mãe": {
+        titulo: "Placa-Mãe",
+        img: "https://www.infowester.com/img_art/placa-mae-componentes.jpg",
+        desc: "É a peça de hardware principal que conecta todos os componentes do computador."
+      },
+      "processador": {
+        titulo: "Processador (CPU)",
+        img: "https://s2-techtudo.glbimg.com/qc_IW3ZutEQpHoPc2SPAivvWXtI=/0x0:695x463/1000x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/V/o/VRLU2iTgAJXPsvZhh3bQ/2015-10-07-processador-da-intel-alcancou-altissima-velocidade.png",
+        desc: "Podemos dizer que ele é o cérebro do computador, responsável por executar instruções."
+      },
+      "memória ram": {
+        titulo: "Memória RAM",
+        img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUhS1KRWwcRWzmTRLknMcFKX1HzRV2Angui3znzB9Ti7_PQfAPGHh2pL3F9wEKoXtrrapnNE7i0Zx3Ksbo-p2cuOxL2aWVkMzi22NRZv5v48hVCS45M4LhdmdqAaGU3Mn9qiJWt7fsdVY/s2048/DDR4_module_2-0.jpg",
+        desc: "Armazena dados temporários que estão em uso no momento."
+      },
+      "disco rígido": {
+        titulo: "Disco rígido / SSD",
+        img: "https://s2-techtudo.glbimg.com/lj4k23E-2eTQtrYhPYs80OmKpYE=/0x0:620x343/1000x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/Y/A/bjhId5TBW0fBaubJDjzA/2013-10-22-ssdvhd.jpg",
+        desc: "O disco rígido ou mais conhecido como HD, é o dispositivo de armazenamento."
+      },
+      "fonte de alimentação": {
+        titulo: "Fonte",
+        img: "https://www.i-tecnico.pt/wp-content/uploads/2021/07/Fonte-de-alimentacao-001.png",
+        desc: "É a peça de hardware responsavel pela alimentação de energia de todos os outros componentes."
+      },
+      "placa de vídeo": {
+        titulo: "Placa de vídeo",
+        img: "https://shopee.com.br/blog/wp-content/uploads/2021/12/Como-escolher-uma-placa-de-video-para-o-seu-PC.jpg",
+        desc: "É a peça de hardware responsavel por fornecer a imagem, ela quem faz o processamento de apps de edição ou jogos."
+      }
+    };
+
+    // Substitui palavras do glossário no corpo
+    document.body.innerHTML = document.body.innerHTML.replace(
+      /\b(placa-mãe|processador|Memória ram|Disco rígido|Fonte de alimentação|Placa de vídeo)\b/gi,
+      (match) => `<span class="glossario-link" onclick="abrirPopup('${match.toLowerCase()}')">${match}</span>`
+    );
+
+    function abrirPopup(term) {
+      const info = glossario[term];
+      if (!info) return;
+      document.getElementById("popup-title").textContent = info.titulo;
+      document.getElementById("popup-img").src = info.img;
+      document.getElementById("popup-desc").textContent = info.desc;
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function fecharPopup() {
+      document.getElementById("popup").style.display = "none";
     }
   </script>
 </body>
 </html>
+
 
